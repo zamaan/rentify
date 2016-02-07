@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 
 from django.db import models
 from django.contrib.auth.models import User
+from django.forms import ModelForm
 
 # Create your models here.
 
@@ -13,3 +14,7 @@ class Profile(models.Model):
 	address = models.TextField()
 	bio = models.TextField(blank=True,null=True)
 
+class ProfileForm(ModelForm):
+    class Meta:
+        model = Profile
+        exclude = ['user']
