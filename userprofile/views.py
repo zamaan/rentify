@@ -1,4 +1,5 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, render_to_response
+from django.template import RequestContext
 from .models import *
 
 # Create your views here.
@@ -30,3 +31,15 @@ def add_profile(request):
     return render(request, 'add_profile.html', {
         'form': form,
     })
+
+
+def show_profile(request,username=False):
+	if username:
+		user = User.objects.get(username = username)
+		profile = user.profile_set.get()
+	else:
+		user = request.user
+		profile = user.profile_set.get()
+	return render_to_response('show_profile.html',
+                          {'profile':profile},
+                          context_instance=RequestContext(request))

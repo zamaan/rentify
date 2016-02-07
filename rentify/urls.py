@@ -15,10 +15,12 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-from userprofile.views import add_profile
+from userprofile.views import add_profile, show_profile
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^accounts/', include('registration.backends.simple.urls')),
     url(r'^profiles/add/',add_profile),
+    url(r'^profile/(\w+)',show_profile),
+    url(r'^profile/',show_profile),
 ]
