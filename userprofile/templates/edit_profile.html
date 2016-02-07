@@ -1,0 +1,12 @@
+{% extends '../templates/base.html' %}
+{% block title %}Edit Profile - {{request.user.username}}{% endblock %}
+{% block content %}
+
+<h1>Edit Profile - {{ request.user.username }}</h1>
+<form role="form" action="" method="post">
+
+   {% csrf_token %}
+   {{ form.as_p }}
+   <button type="submit">Submit</button>
+</form>
+{% endblock %}

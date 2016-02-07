@@ -43,3 +43,29 @@ def show_profile(request,username=False):
 	return render_to_response('show_profile.html',
                           {'profile':profile},
                           context_instance=RequestContext(request))
+
+def edit_profile(request):
+    # grab the object...
+    profile = request.user.profile_set.get()
+
+    # set the form we're using...
+    form_class = ProfileForm
+
+    # if we're coming to this view from a submitted form,  
+    if request.method == 'POST':
+        # grab the data from the submitted form
+        form = form_class(data=request.POST, instance=profile)
+        if form.is_valid():
+            # save the new data
+            form.save()
+            return redirect('/profile/')
+
+    # otherwise just create the form
+    else:
+        form = form_class(instance=profile)
+
+    # and render the template
+    return render(request, 'edit_profile.html', {
+        'profile': profile,
+        'form': form,
+    })

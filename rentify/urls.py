@@ -15,12 +15,13 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-from userprofile.views import add_profile, show_profile
+from userprofile.views import add_profile, show_profile, edit_profile
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^accounts/', include('registration.backends.simple.urls')),
     url(r'^profiles/add/',add_profile),
+    url(r'^profile/edit/',edit_profile),
     url(r'^profile/(\w+)',show_profile),
     url(r'^profile/',show_profile),
 ]
