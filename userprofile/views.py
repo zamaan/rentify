@@ -3,6 +3,17 @@ from django.template import RequestContext
 from .models import *
 
 # Create your views here.
+
+def home(request):
+     return render(request, 'home.html', {
+    })
+
+
+def about(request):
+        return render(request,'about.html',{
+        })
+
+
 def add_profile(request):
     form_class = ProfileForm
 
