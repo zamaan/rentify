@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, render_to_response
 from django.template import RequestContext
 from .models import *
+from userprofile.forms import ContactForm
 
 # Create your views here.
 
@@ -13,6 +14,28 @@ def about(request):
         return render(request,'about.html',{
         })
 
+
+def contact(request):
+    form_class=ContactForm
+    if request.method == 'POST':
+        form=form_class(data=request.POST)
+        if form.is_valid():
+                contact_name=form.cleaned_data['contact_name']
+                contact_email=form.cleaned_data['contact_email']
+                form_content=form.cleaned_data['content']
+                template=get_template('contact_template.txt')
+
+                context=Context({
+                    'contact_name':contact_name,
+                    'contact_email':contact_email,
+                    'form_content':form_content,
+                    })
+                context=template.render(context)
+                email=EmailMessage('New contact form submission',content, 'Your website <hi@rental.com>',['zamaan06@gmail.com'],
+                    headers= {'Reply-To':contact_email })
+                email.send()
+                return redirect('contact')
+    return render(request,'contact.html',{'form':form_class})
 
 def add_profile(request):
     form_class = ProfileForm
