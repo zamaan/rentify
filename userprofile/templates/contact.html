@@ -1,0 +1,15 @@
+{% extends '../templates/base.html' %}
+{% block title %}RentXYZ{% endblock %}
+{% block content %}
+<h1> Welcome to Rentxyz</h1>
+<p>
+<b><u>Contact us</b></u>
+</p>
+<form role="form" action="" method="post">
+	{% csrf_token %}
+	{{ form.as_p }}
+	<button type="submit">Submit </button>
+</form>
+
+<a href="/home.html">home</a>
+{% endblock %}
