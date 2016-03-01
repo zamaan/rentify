@@ -1,0 +1,12 @@
+{% extends '../templates/base.html' %}
+{% block title %}{{item.name}}{% endblock %}
+{% block super %}
+{% endblock %}
+{% block content %}
+<h1>{{ item.name }}</h1>
+<h2>{{ item.description }}</h2>
+<h2>{{ item.price }}</h2>
+<h2>{{ item.location }}</h2>
+<a href="/home.html">home</a>
+<a href="/items/">back</a>
+{% endblock %}
