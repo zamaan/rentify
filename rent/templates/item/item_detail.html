@@ -1,0 +1,13 @@
+{% extends '../templates/base.html' %}
+{% block title %}Item Detail{% endblock %}
+{{ block.super }}
+{{ % endblock %}}
+{% block content %}
+{% for item in items %}
+<h2>{{ item.name }}</h2>
+<h2>{{ item.description }}</h2>
+<h2>{{ item.price }}</h2>
+<h2>{{ item.location }}</h2>
+{% endfor $}
+<a href="/home.html">home</a>
+{% endblock %}
