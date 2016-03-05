@@ -16,7 +16,7 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from userprofile.views import add_profile, show_profile, edit_profile, home, about, contact
-from rent.views import item_detail
+from rent.views import item_detail, item_list, add_item
 
 urlpatterns = [
     url(r'^$', home),
@@ -24,12 +24,14 @@ urlpatterns = [
     url(r'^about',about),
     url(r'^contact',contact),
     url(r'^admin/', admin.site.urls),
-    url(r'^item/detail',item_detail),
+    url(r'^items/',item_list),
+    url(r'^item/(\d+)/',item_detail),
+    url(r'^item/add/',add_item),
     url(r'^accounts/', include('registration.backends.simple.urls')),
     url(r'^profile/add/',add_profile),
     url(r'^profile/edit',edit_profile),
     url(r'^profile/(\w+)',show_profile),
     url(r'^profile/',show_profile),
     
- 
+
 ]
