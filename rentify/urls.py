@@ -17,7 +17,6 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from userprofile.views import add_profile, show_profile, edit_profile, home, about, contact
 from rent.views import item_detail, item_list, add_item
-
 urlpatterns = [
     url(r'^$', home),
     url(r'^home', home),

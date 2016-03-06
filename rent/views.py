@@ -18,7 +18,6 @@ def item_detail(request,id):
 		'item':item,
 		})
 
-
 @login_required
 
 def add_item(request):
