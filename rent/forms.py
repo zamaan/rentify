@@ -7,8 +7,7 @@ class ItemForm(ModelForm):
         model = Item
         fields = ('name', 'description','price','location')
 
-
 class UploadForm(ModelForm):
 	class Meta:
 		model=Upload
-		fields=('image',)
+		fields=('image')
