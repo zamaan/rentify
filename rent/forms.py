@@ -10,4 +10,4 @@ class ItemForm(ModelForm):
 class UploadForm(ModelForm):
 	class Meta:
 		model=Upload
-		fields=('image')
+		fields=('image',)
