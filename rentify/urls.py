@@ -16,7 +16,8 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from userprofile.views import add_profile, show_profile, edit_profile, home, about, contact
-from rent.views import item_detail, item_list, add_item
+from rent.views import item_detail, item_list, add_item, add_photo
+
 urlpatterns = [
     url(r'^$', home),
     url(r'^home', home),
@@ -26,6 +27,7 @@ urlpatterns = [
     url(r'^items/',item_list),
     url(r'^item/(\d+)/',item_detail),
     url(r'^item/add/',add_item),
+    url(r'^item/add/photo/',add_photo),
     url(r'^accounts/', include('registration.backends.simple.urls')),
     url(r'^profile/add/',add_profile),
     url(r'^profile/edit',edit_profile),
