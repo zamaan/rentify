@@ -5,9 +5,10 @@ from rent.models import Item,Upload
 class ItemForm(ModelForm):
     class Meta:
         model = Item
-        fields = ('name', 'description','price','location')
+        fields = ('name', 'description','price','location','image',)
 
-class UploadForm(ModelForm):
+class UploadForm(forms.Form):
 	class Meta:
 		model=Upload
 		fields=('image',)
+		
