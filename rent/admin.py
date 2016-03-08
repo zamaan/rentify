@@ -4,7 +4,7 @@ from rent.models import Item,Upload
 
 class ItemAdmin(admin.ModelAdmin):
 	model=Item
-	list_display=('name','description','price','location',)
+	list_display=('name','description','price','location','image')
 	prepopulated_fields={'slug':('name',)}
 
 class UploadAdmin(admin.ModelAdmin):
