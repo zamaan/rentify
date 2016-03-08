@@ -35,7 +35,6 @@ urlpatterns = [
     url(r'^profile/(\w+)',show_profile),
     url(r'^profile/',show_profile),
     
-
 ]
 
 if settings.DEBUG: 
