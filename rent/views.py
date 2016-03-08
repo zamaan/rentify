@@ -1,8 +1,8 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.template.defaultfilters import slugify
-from rent.models import Item,Upload
-from rent.forms import ItemForm,UploadForm
+from rent.models import Item, Upload
+from rent.forms import ItemForm, UploadForm
 
 # Create your views here.
 
@@ -21,32 +21,6 @@ def item_detail(request,id):
 		})
 
 @login_required
-
-def add_photo(request, slug):
-	item=Item.objects.get(slug=slug)
-	#if thing.user != request.user:
-	#	raise Http404
-	form_class = UploadForm
-	if request.method == 'POST':
-		form=form_class(data=request.POST, files=request.FILES, instance=thing)
-			
-	if form.is_valid():
-	
-		Upload.objects.create(image=form.cleaned_data['image'],thing=thing,)
-		return redirect('item_detail', slug=thing.slug)
-	
-	else:
-		form=form_class(instance=item)
-		uploads=items.uploads.all()
-
-	return render(request, '/item/add/photo/',{
-					'items':items,
-					'form':form,
-					'uploads':uploads,
-	}
-	)
-
-
 
 def add_item(request):
     form_class = ItemForm
@@ -77,4 +51,26 @@ def add_item(request):
     return render(request, 'add_item.html', {
         'form': form,
     })
+def add_photo(request, slug):
+	item=Item.objects.get(slug=slug)
+	#if thing.user != request.user:
+	#	raise Http404
+	form_class = UploadForm
+	if request.method == 'POST':
+		form=form_class(data=request.POST, files=request.FILES, instance=thing)
+			
+	if form.is_valid():
+	
+		Upload.objects.create(image=form.cleaned_data['image'],thing=thing,)
+		return redirect('item_detail', slug=thing.slug)
+	
+	else:
+		form=form_class(instance=item)
+		uploads=items.uploads.all()
 
+	return render(request, '/item/add/photo/',{
+					'items':items,
+					'form':form,
+					'uploads':uploads,
+	}
+	)
