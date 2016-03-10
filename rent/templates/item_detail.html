@@ -8,8 +8,10 @@
 <h2>Price per week : {{ item.price }}</h2>
 <h2>Location : {{ item.location }}</h2>
 {% for upload in uploads %}
-<img src="{{upload.image.url }}" alt="" />
+<img src="{{ items.image.url }}">
+<img src="{{ upload.image.url }}" alt="" />
 {% endfor %}
-<a href="/home.html">home</a>
-<a href="/items/">back</a>
+<a href="edit">Edit</a><br>
+<a href="/home.html">Home</a><br>
+<a href="/items/">Back</a>
 {% endblock %}
