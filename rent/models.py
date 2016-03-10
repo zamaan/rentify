@@ -16,6 +16,9 @@ def __unicode__(self):
 def get_image_path(instance,filename):
 	return '/'.join(['item_images', instance.item.slug,filename])
 
+def get_absolute_url(self):
+    	return "/item/%s/" %self.slug
+
 
 class Upload(models.Model):
 	item=models.ForeignKey(Item,related_name="uploads")

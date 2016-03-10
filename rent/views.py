@@ -12,8 +12,9 @@ def item_list(request):
 		'items':items,
 		})
 
-def item_detail(request,id):
-	item=Item.objects.get(pk=id)
+def item_detail(request, slug):
+
+	item = Item.objects.get(slug=slug)
 	uploads=item.uploads.all()
 	return render(request, 'item_detail.html',{
 		'item':item,
@@ -51,6 +52,37 @@ def add_item(request):
     return render(request, 'add_item.html', {
         'form': form,
     })
+
+def edit_item(request, slug):
+    # grab the object...
+    item = Item.objects.get(slug=slug)
+
+    # grab the current logged in user and make sure they're the owner of the thing
+    #if item.user != request.user:
+     #   raise Http404
+
+    # set the form we're using...
+    form_class = ItemForm
+
+    # if we're coming to this view from a submitted form,  
+    if request.method == 'POST':
+        # grab the data from the submitted form
+        form = form_class(data=request.POST, instance=item)
+        if form.is_valid():
+            # save the new data
+            form.save()
+            return redirect('/items/', slug=item.slug)
+
+    # otherwise just create the form
+    else:
+        form = form_class(instance=item)
+
+    # and render the template
+    return render(request, 'edit_item.html', {
+        'item': item,
+        'form': form,
+    })
+
 def add_photo(request, slug):
 	item=Item.objects.get(slug=slug)
 	#if thing.user != request.user:
