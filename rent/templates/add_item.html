@@ -2,12 +2,11 @@
 {% block title %} Add{% endblock %}
 {% block content %}
 <h1>Add an Item</h1>
-<form role="form" action="" method="post">
+<form method="post" role="form" action="" enctype='multipart/form-data' >
     {% csrf_token %}
     {{ form.as_p }}
     <input type="submit" value="Submit" />
 </form>
-<a href="/item/add/photo/">Add Image </a>
-<a href="/items/">back </a>
-
+<a href="/item/add/photo/">Add Image </a><br>
+<a href="/items/">Back </a>
 {% endblock %}
