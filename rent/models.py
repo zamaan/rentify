@@ -22,5 +22,5 @@ def get_absolute_url(self):
 
 class Upload(models.Model):
 	item=models.ForeignKey(Item,related_name="uploads")
-	image=models.ImageField(upload_to=get_image_path, default = 'pic_folder/None/no-img.jpg')
+	image=models.ImageField(upload_to=get_image_path)
 
