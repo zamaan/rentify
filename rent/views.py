@@ -1,8 +1,8 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.template.defaultfilters import slugify
-from rent.models import Item
-from rent.forms import ItemForm
+from rent.models import Item,Upload
+from rent.forms import ItemForm,ItemUploadForm
 
 # Create your views here.
 
@@ -83,3 +83,22 @@ def edit_item(request, slug):
         'form': form,
     })
 
+def add_photo(request,slug):
+	item = Item.objects.get(slug=slug)
+
+	form_class=ItemUploadForm
+	if request.method == 'POST':
+		form = form_class(data=request.POST, files=request.FILES, instance=item)
+		
+		#if form.is_valid():
+		#	Upload.objects.create(image=form.cleaned_data['image'],item=item,)
+		#return redirect('add_photo.html',slug=item.slug)
+			
+		#else:
+		form=form_class(instance=item)
+		uploads=item.uploads.all()
+		return render(request,'add_photo.html',{
+				'item':item,
+				'form':form,
+				'uploads':uploads,
+				})
