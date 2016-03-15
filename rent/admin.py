@@ -7,5 +7,9 @@ class ItemAdmin(admin.ModelAdmin):
 	list_display=('name','description','price','location','image')
 	prepopulated_fields={'slug':('name',)}
 
+class UploadAdmin(admin.ModelAdmin):
+	list_display=('item',)
+	list_display_links = ('item',)
 
 admin.site.register(Item, ItemAdmin)
+admin.site.register(Upload,UploadAdmin)
