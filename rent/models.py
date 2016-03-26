@@ -11,7 +11,7 @@ DURATION = (
 
 # Create your models here.
 class Item(models.Model):
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User,default=1)
     name=models.CharField(max_length=255,null=True)
     image=models.ImageField(null=True,blank=True)
     description=models.TextField(null=True)
