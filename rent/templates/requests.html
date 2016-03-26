@@ -10,7 +10,8 @@
     <h2>{{ r.item.name }}</h2>
     <p>requested by {{r.user.username}} for {{r.duration}} week(s) </p>
     <p>price : {{r.get_rental_price}}</p>
-    <a href="/request-status/{{r.id}}/approved/">approve</a>
+    <a href="/request-status/{{r.id}}/approved/">Approve</a>
+    <a href="/request-status/{{r.id}}/deny/">Deny</a>
   {% endfor %}
   
 {% else %}
