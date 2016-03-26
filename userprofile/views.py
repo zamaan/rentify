@@ -6,7 +6,11 @@ from userprofile.forms import ContactForm
 # Create your views here.
 
 def home(request):
-     return render(request, 'home.html', {
+     return render(request, 'home2.html', {
+    })
+
+def home2(request):
+     return render(request, 'home2.html', {
     })
 
 
