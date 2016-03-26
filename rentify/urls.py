@@ -18,7 +18,7 @@ from django.conf.urls.static import static
 from django.conf.urls import url, include
 from django.contrib import admin
 from userprofile.views import add_profile, show_profile, edit_profile, home, about, contact
-from rent.views import item_detail, item_list, add_item, edit_item
+from rent.views import item_detail, item_list, add_item, edit_item, requestitem, requests, change_request_status
 
 urlpatterns = [
     url(r'^$', home),
@@ -35,5 +35,8 @@ urlpatterns = [
     url(r'^profile/edit',edit_profile),
     url(r'^profile/(\w+)',show_profile),
     url(r'^profile/',show_profile),
+    url(r'^requestitem/',requestitem),
+    url(r'^requests/',requests),
+    url(r'^request-status/(\d+)/(\w+)/',change_request_status),
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
