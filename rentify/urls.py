@@ -18,7 +18,7 @@ from django.conf.urls.static import static
 from django.conf.urls import url, include
 from django.contrib import admin
 from userprofile.views import add_profile, show_profile, edit_profile, home, about, contact
-from rent.views import item_detail, item_list, add_item, add_photo, edit_item
+from rent.views import item_detail, item_list, add_item, edit_item
 
 urlpatterns = [
     url(r'^$', home),
@@ -29,8 +29,7 @@ urlpatterns = [
     url(r'^items/',item_list),
     url(r'^item/add/',add_item),
     url(r'^item/(?P<slug>[-\w]+)/$',item_detail), 
-    url(r'^item/(?P<slug>[-\w]+)/edit/',edit_item),  
-    url(r'^item/add/photo/',add_photo),
+    url(r'^item/(?P<slug>[-\w]+)/edit/',edit_item),
     url(r'^accounts/', include('registration.backends.simple.urls')),
     url(r'^profile/add/',add_profile),
     url(r'^profile/edit',edit_profile),

@@ -19,8 +19,3 @@ def get_image_path(instance,filename):
 def get_absolute_url(self):
     	return "/item/%s/" %self.slug
 
-
-class Upload(models.Model):
-	item=models.ForeignKey(Item,related_name="uploads")
-	image=models.ImageField(upload_to=get_image_path)
-
