@@ -1,0 +1,50 @@
+{% extends '../templates/base.html' %}
+{% block title %}Items{% endblock %}
+{% block super %}
+{% endblock %}
+{% block content %}
+
+<h1>New Requests :</h1>
+{% if requests %}
+  {% for r in requests %}
+    <h2>{{ r.item.name }}</h2>
+    <p>requested by {{r.user.username}} for {{r.duration}} week(s) </p>
+    <p>price : {{r.get_rental_price}}</p>
+    <a href="/request-status/{{r.id}}/approved/">approve</a>
+  {% endfor %}
+  
+{% else %}
+<p>----</p>
+{% endif %}
+
+
+<h1>Approved Requests :</h1>
+{% if approved_requests %}
+  {% for r in approved_requests %}
+    <h2>{{ r.item.name }}</h2>
+    <p>requested by {{r.user.username}} for {{r.duration}} week(s) </p>
+    <p>price : {{r.get_rental_price}}</p>
+    <a href="/request-status/{{r.id}}/fulfilled/">got back item</a>
+  {% endfor %}
+  
+{% else %}
+<p>----</p>
+{% endif %}
+
+
+<h1>Past Requests :</h1>
+{% if fulfilled_requests %}
+  {% for r in fulfilled_requests %}
+    <h2>{{ r.item.name }}</h2>
+    <p>requested by {{r.user.username}} for {{r.duration}} week(s) </p>
+    <p>price : {{r.get_rental_price}}</p>
+  {% endfor %}
+
+{% else %}
+<p>----</p>
+{% endif %}
+
+
+<a href="/home">home</a>
+
+{% endblock %}
