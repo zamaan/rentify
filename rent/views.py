@@ -1,23 +1,23 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.template.defaultfilters import slugify
-from rent.models import Item
+from rent.models import Item, RequestItem
 from rent.forms import ItemForm
-
+from django.http import HttpResponseRedirect
 # Create your views here.
 
 def item_list(request):
-	items=Item.objects.all()
-	return render(request, 'item_list.html',{
-		'items':items,
-		})
+    items=Item.objects.all()
+    return render(request, 'item_list.html',{
+        'items':items,
+        })
 
 def item_detail(request, slug):
 
-	item = Item.objects.get(slug=slug)
-	return render(request, 'item_detail.html',{
-		'item':item,
-		})
+    item = Item.objects.get(slug=slug)
+    return render(request, 'item_detail.html',{
+        'item':item,
+        })
 
 @login_required
 
@@ -80,3 +80,39 @@ def edit_item(request, slug):
         'item': item,
         'form': form,
     })
+
+def requests(request):
+    user = request.user
+    requests = user.requestitem_set.filter(status="requested")
+    approved_requests = user.requestitem_set.filter(status="approved")
+    fulfilled_requests = user.requestitem_set.filter(status="fulfilled")
+    return render(request, 'requests.html', {
+        'requests': requests,
+        'approved_requests': approved_requests,
+        'fulfilled_requests': fulfilled_requests,
+    })
+
+
+def requestitem(request):
+    if request.method == "POST":
+      user = request.user
+      item_id = request.POST['item_id']
+      item = Item.objects.get(id = item_id)
+      duration = request.POST['duration']
+      status = "requested"
+    
+      item_request,created = RequestItem.objects.get_or_create(
+                                       user = user, 
+                                       item = item, 
+                                       duration = duration, 
+                                       status = status)
+      return redirect('/items/', slug=item.slug)
+    #if created:
+    ###send email to item owner that a request has been made by {{user.profile.name}} etc
+
+def change_request_status(request,r_id,status):
+    request_item = RequestItem.objects.get(id=r_id)
+    request_item.status = status
+    request_item.save()
+    ## send emaul that request has been approved
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
