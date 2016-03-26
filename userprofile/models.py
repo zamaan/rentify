@@ -13,6 +13,7 @@ class Profile(models.Model):
 	city = models.CharField(max_length=200)
 	address = models.TextField()
 	bio = models.TextField(blank=True,null=True)
+	phone_number = models.CharField(max_length=100)
 
 class ProfileForm(ModelForm):
     class Meta:
