@@ -15,10 +15,8 @@ def item_list(request):
 def item_detail(request, slug):
 
 	item = Item.objects.get(slug=slug)
-	uploads=item.uploads.all()
 	return render(request, 'item_detail.html',{
 		'item':item,
-		'uploads':uploads
 		})
 
 @login_required
