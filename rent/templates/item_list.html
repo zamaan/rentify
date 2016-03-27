@@ -5,6 +5,7 @@
 <link href="http://getbootstrap.com/examples/sticky-footer-navbar/sticky-footer-navbar.css" rel="stylesheet">
 <style type="text/css">
 	.im-centered {margin: auto; max-width: 300px;}
+	.req-count {margin-right:200px;}
 </style>
 <style type="text/css">
 	body {
@@ -80,36 +81,27 @@
 }
 
 #columns:hover .pin:not(:hover) {
-	opacity: 0.4;
+	opacity: 0.9;
 }
 </style>
 {% endblock %}
 {% block content %}
 
-<div class="container">
-    <div class="row">
-    {% for item in items %}
-        <div class="col-xs-18 col-sm-6 col-md-3">
-          <div class="thumbnail">
-            <img src="/media/{{item.image}}" alt="" width="250" height="150">
-              <div class="caption">
-                <h4 style="margin-bottom:20px;">{{item.name}}</h4>
-                <p><a href="/item/{{item.slug}}/" class="btn btn-info btn-xs" role="button">Request</a></p>
-            </div>
-          </div>
-        </div>
-    {% endfor %}
-    </div><!-- End row -->  
-</div><!-- End container -->
-
-<hr/>
+{% if requests_count %}
+<div class="alert alert-success alert-dismissible" role="alert">
+<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <a href="/requests" class="alert-link"><h2>You have {{requests_count}} new requests</h2></a>
+</div>
+{% endif %}
 
 
-<div id="wrapper">
+<div id="wrapper" style="margin-bottom:10px;">
 	<div id="columns">
 	    {% for item in items %}
 		<div class="pin">
+		    <a href="/item/{{item.slug}}/">
 			<img src="/media/{{item.image}}"/>
+			</a>
 			<p>
 			  {{item.name}}
 			</p>
