@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'registration',
     'userprofile',
-    'rent',
+    'rent',    
+
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -116,6 +117,8 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+LOGIN_REDIRECT_URL = '/items'
 
 
 # Static files (CSS, JavaScript, Images)
