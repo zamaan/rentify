@@ -2,15 +2,24 @@ from django.shortcuts import render, redirect, render_to_response
 from django.template import RequestContext
 from .models import *
 from userprofile.forms import ContactForm
+from registration.backends.simple.views import RegistrationView
+from django.contrib.auth import authenticate, login as auth_login
+import hashlib
 
 # Create your views here.
 
 def home(request):
-     return render(request, 'home2.html', {
+    if request.user.is_authenticated():
+        return redirect('/items/')
+    else:
+        return render(request, 'home2.html', {
     })
 
 def home2(request):
-     return render(request, 'home2.html', {
+    if request.user.is_authenticated():
+        return redirect('/items/')
+    else:
+        return render(request, 'home2.html', {
     })
 
 
@@ -60,7 +69,7 @@ def add_profile(request):
             userprofile.save()
 
             # redirect to our newly created thing
-            return redirect('/profile')
+            return redirect('/items')
 
     # otherwise just create the form
     else:
@@ -72,14 +81,16 @@ def add_profile(request):
 
 
 def show_profile(request,username=False):
-	if username:
-		user = User.objects.get(username = username)
-		profile = user.profile_set.get()
-	else:
-		user = request.user
-		profile = user.profile_set.get()
-	return render_to_response('show_profile.html',
-                          {'profile':profile},
+    if username:
+        user = User.objects.get(username = username)
+        profile = user.profile_set.get()
+    else:
+        user = request.user
+        profile = user.profile_set.get()
+    email_hash = hashlib.md5(user.email.strip().lower()).hexdigest()
+    gravatar_url = "http://www.gravatar.com/avatar/%s" % email_hash
+    return render_to_response('show_profile.html',
+                          {'profile':profile,'gravatar_url':gravatar_url},
                           context_instance=RequestContext(request))
 
 def edit_profile(request):
@@ -107,3 +118,7 @@ def edit_profile(request):
         'profile': profile,
         'form': form,
     })
+
+class MyRegistrationView(RegistrationView):
+    def get_success_url(self, user):
+        return "/profile/add/"
