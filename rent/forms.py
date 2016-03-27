@@ -6,3 +6,7 @@ class ItemForm(ModelForm):
     class Meta:
         model = Item
         fields = ('name', 'description','price','location','image',)
+
+        widgets = {
+            'location': forms.TextInput(attrs={'placeholder': 'City'}),
+        }
