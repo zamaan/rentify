@@ -13,6 +13,9 @@
     <title>RentXYZ.in</title>
     {% block head %}
     {% endblock %}
+    <style type="text/css">
+      .navbar-right {margin-top:7px;}
+    </style>
 
     <!-- Bootstrap core CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
@@ -43,15 +46,22 @@
           <a class="navbar-brand" href="/">RentXYZ.in</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
-          <form class="navbar-form navbar-right">
+        {% if request.user.is_authenticated %}
+        <div class="navbar-right nav-centre">
+        <a class="btn btn-primary" href="/home">About</a> | <a class="btn btn-primary" href="/items">Items</a> | <a class="btn btn-primary" href="/profile">Profile</a> | <a class="btn btn-danger" href="/accounts/logout/">Logout</a>
+        </div>
+        {% else %}
+          <form method="post" class="navbar-form navbar-right" action="{% url 'django.contrib.auth.views.login' %}">
+          {% csrf_token %}
             <div class="form-group">
-              <input type="text" placeholder="Email" class="form-control">
+              <input type="text" placeholder="Username" class="form-control" name="username">
             </div>
             <div class="form-group">
-              <input type="password" placeholder="Password" class="form-control">
+              <input type="password" placeholder="Password" class="form-control" name="password">
             </div>
-            <button type="submit" class="btn btn-success">Sign in</button>
+            <input type="submit" value="Sign in" class="btn btn-success"/>
           </form>
+          {% endif %}
         </div><!--/.navbar-collapse -->
       </div>
     </nav>
@@ -60,7 +70,7 @@
       <hr>
 
       <footer>
-        <p>&copy; 2015 Company, Inc.</p>
+        <p>&copy; 2016 Altshift Web Labs</p>
       </footer>
     </div> <!-- /container -->
 

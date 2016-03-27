@@ -10,16 +10,19 @@
 <form method="post" action="." class="form-signin">
 <h2 class="form-signin-heading">Login here</h2>
   {% csrf_token %} 
+  
+  <label>{{ form.non_field_errors }}</label>
   {% for field in form %}
 
 
     <label for="{{field.id_for_label}}">{{ field.label_tag }}</label>
     <input type="{{field|field_type}}" name="{{field.html_name}}" id="{{field.id_for_label}}" class="form-control" placeholder="{{ field.help_text }}"/>
+    <label for="{{field.id_for_label}}">{{ field.errors }}</label></br>
 
   {% endfor %} 
   <input type="submit" value="{% trans 'Log in' %}" class="btn btn-lg btn-primary btn-block"/>
   <input type="hidden" name="next" value="{{ next }}" />
-  <p>{% trans "Forgot password" %}? <a href="{% url 'auth_password_reset' %}">{% trans "Reset it" %}</a>!</p>
+  <!--<p>{% trans "Forgot password" %}? <a href="{% url 'auth_password_reset' %}">{% trans "Reset it" %}</a>!</p>-->
   <p>{% trans "Not member" %}? <a href="{% url 'registration_register' %}">{% trans "Register" %}</a>!</p>
 </form>
 
