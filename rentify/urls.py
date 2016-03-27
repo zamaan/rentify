@@ -17,8 +17,8 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.conf.urls import url, include
 from django.contrib import admin
-from userprofile.views import add_profile, show_profile, edit_profile, home2, about, contact
-from rent.views import item_detail, item_list, add_item, edit_item, requestitem, requests, change_request_status
+from userprofile.views import add_profile, show_profile, edit_profile, home2, about, contact, MyRegistrationView
+from rent.views import item_detail, item_list, add_item, edit_item, requestitem, requests, change_request_status, request_success
 
 urlpatterns = [
     url(r'^$', home2),
@@ -30,12 +30,14 @@ urlpatterns = [
     url(r'^item/add/',add_item),
     url(r'^item/(?P<slug>[-\w]+)/$',item_detail), 
     url(r'^item/(?P<slug>[-\w]+)/edit/',edit_item),
+    url(r'^accounts/register/$', MyRegistrationView.as_view(), name='registration_register'),
     url(r'^accounts/', include('registration.backends.simple.urls')),
     url(r'^profile/add/',add_profile),
     url(r'^profile/edit',edit_profile),
     url(r'^profile/(\w+)',show_profile),
     url(r'^profile/',show_profile),
     url(r'^requestitem/',requestitem),
+    url(r'^request/success/(\d+)/',request_success),
     url(r'^requests/',requests),
     url(r'^request-status/(\d+)/(\w+)/',change_request_status),
     
