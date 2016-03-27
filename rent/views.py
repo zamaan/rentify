@@ -4,6 +4,7 @@ from django.template.defaultfilters import slugify
 from rent.models import Item, RequestItem
 from rent.forms import ItemForm
 from django.http import HttpResponseRedirect
+from rent.utils import send_request_email
 # Create your views here.
 
 def item_list(request):
@@ -41,7 +42,7 @@ def add_item(request):
             items.save()
 
             # redirect to our newly created thing
-            return redirect('/items/', slug=items.slug)
+            return redirect('/profile')
 
     # otherwise just create the form
     else:
@@ -69,7 +70,7 @@ def edit_item(request, slug):
         if form.is_valid():
             # save the new data
             form.save()
-            return redirect('/items/', slug=item.slug)
+            return redirect('/item/%s/'%item.slug, slug=item.slug)
 
     # otherwise just create the form
     else:
@@ -83,9 +84,23 @@ def edit_item(request, slug):
 
 def requests(request):
     user = request.user
-    requests = user.requestitem_set.filter(status="requested")
-    approved_requests = user.requestitem_set.filter(status="approved")
-    fulfilled_requests = user.requestitem_set.filter(status="fulfilled")
+    requests = []
+    user_items = user.item_set.all()
+    for item in user_items:
+        for i in item.requestitem_set.filter(status="requested"):
+            requests.append(i)
+
+    approved_requests = []
+    for item in user_items:
+        for i in item.requestitem_set.filter(status="approved"):
+            approved_requests.append(i)
+
+    fulfilled_requests = []
+    for item in user_items:
+        for i in item.requestitem_set.filter(status="fulfilled"):
+            fulfilled_requests.append(i)
+    
+    
     return render(request, 'requests.html', {
         'requests': requests,
         'approved_requests': approved_requests,
@@ -106,9 +121,16 @@ def requestitem(request):
                                        item = item, 
                                        duration = duration, 
                                        status = status)
-      return redirect('/items/', slug=item.slug)
-    #if created:
+      return redirect('/request/success/%d/'%item_request.id)
+    if created:   
+        send_request_email(item.user.email,item_request)
     ###send email to item owner that a request has been made by {{user.profile.name}} etc
+
+def request_success(request,r_id):
+    r_item = RequestItem.objects.get(id=r_id)
+    return render(request, 'request_success.html',{
+        'r_item':r_item,
+        })
 
 def change_request_status(request,r_id,status):
     request_item = RequestItem.objects.get(id=r_id)
