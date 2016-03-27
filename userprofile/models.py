@@ -20,4 +20,4 @@ class Profile(models.Model):
 class ProfileForm(ModelForm):
     class Meta:
         model = Profile
-        exclude = ['user']
+        exclude = ['user','verified']
