@@ -17,12 +17,12 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.conf.urls import url, include
 from django.contrib import admin
-from userprofile.views import add_profile, show_profile, edit_profile, home2, about, contact, MyRegistrationView
+from userprofile.views import add_profile, show_profile, edit_profile, home2, home, about, contact, MyRegistrationView
 from rent.views import item_detail, item_list, add_item, edit_item, requestitem, requests, change_request_status, request_success
 
 urlpatterns = [
     url(r'^$', home2),
-    url(r'^home', home2),
+    url(r'^home', home),
     url(r'^about',about),
     url(r'^contact',contact),
     url(r'^admin/', admin.site.urls),
