@@ -4,7 +4,7 @@
     <div class="jumbotron">
       <div class="container">
         <h1>Welcome to RentXYZ.in!</h1>
-        <p>This is a platform that enables you to rent any items near your area as well as rent out any items you own to folks around you.</p>
+        <h3>Have it, Rent out. Don't have, Rent it.</h3>
         <p>
         {% if request.user.is_authenticated %}
         <a href="/items"class="btn btn-primary btn-lg" href="#" role="button">Explore Items for Rent &raquo;</a>
@@ -20,18 +20,21 @@
       <div class="row">
         <h1>How it works?</h1>
         <div class="col-md-4">
-          <h2>Add Items for Rent</h2>
-          <p>You can now earn money for unused gadgets by adding them here and allowing folks around you to discover them and rent it on a weekly basis.</p>
+          <h2>Rent Out</h2>
+          <p style="font-size:20px;">Earn money from the stuff you own. Add it here so that it fetches you money instead of eating dust!</p>
+          <p style="font-size:20px;">We will notify you when someone requests for an item.</p>
           
         </div>
         <div class="col-md-4">
-          <h2>Manage Requests</h2>
-          <p>Once an order is places, you get a request notification. You then can approve the request or deny. You have total control on who gets to get what.</p>
+          <h2>Manage</h2>
+          <p style="font-size:20px;">Once an order is places, you get a request notification. You then can approve the request or deny. You have total control on who gets what.</p>
+
           
        </div>
         <div class="col-md-4">
-          <h2>Request Items for Rent</h2>
-          <p>If in need of something, you can now discover it on our items feed which lists out all items posted by users around you.</p>
+          <h2>Rent It</h2>
+          <p style="font-size:20px;">Discover whole range of items that are being rented out near you. Why buy when all you need it is for few weeks!</p>
+          <p style="font-size:20px;">You can request to rent and we will notify you with owner details if the request is approved.</p>
           
         </div>
       </div>
