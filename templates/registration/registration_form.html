@@ -1,15 +1,27 @@
 {% extends "base2.html" %}
 {% load i18n %}
+{% load rent_tags %}
+{% block head %}
+<link href="https://getbootstrap.com/examples/signin/signin.css" rel="stylesheet">
+{% endblock %}
 
 {% block content %}
 
 <div class="container">
-<form method="post" action="." class="form-inline">
-  {% csrf_token %}
-  {{ form.as_p }}
-
-  <input type="submit" value="{% trans 'Submit' %}" />
+<form method="post" action="." class="form-signin">
+<h2 class="form-signin-heading">Please Register</h2>
+{% csrf_token %}
+{% for field in form %}
+  <div class="form-group">
+    <label for="{{field.id_for_label}}">{{ field.label_tag }}</label>
+    <input type="{{field|field_type}}" name="{{field.html_name}}" id="{{field.id_for_label}}" class="form-control"/>
+  </div>
+{% endfor %}
+  <input type="submit" value="{% trans 'Submit' %}" class="btn btn-lg btn-primary btn-block"/>
+  <hr/>
+  <h3>Already a User?</h3>
+  <a href="/accounts/login/" class="btn btn-lg btn-primary btn-block">Log In</a>
 </form>
-<a href="/">home</a>
+
 </div>
 {% endblock %}

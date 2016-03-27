@@ -1,10 +1,20 @@
-{% extends '../templates/base.html' %}
+{% extends '../templates/base2.html' %}
+{% load i18n %}
+{% load rent_tags %}
 {% block title %}Add Profile{% endblock %}
+{% block head %}
+<link href="https://getbootstrap.com/examples/signin/signin.css" rel="stylesheet">
+{% endblock %}
 {% block content %}
-<h1>Add Profile</h1>
-<form role="form" action="" method="post">
+<form role="form" action="" method="post" class="form-signin">
+    <h2 class="form-signin-heading">Add Profile</h2>
     {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Submit" />
+    {% for field in form %}
+      <div class="form-group">
+        <label for="{{field.id_for_label}}">{{ field.label_tag }}</label>
+        <input type="{{field|field_type}}" name="{{field.html_name}}" id="{{field.id_for_label}}" class="form-control"/>
+      </div>
+    {% endfor %}
+    <input type="submit" value="{% trans 'Submit' %}" class="btn btn-lg btn-primary btn-block"/>
 </form>
 {% endblock %}

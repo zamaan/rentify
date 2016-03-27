@@ -1,27 +1,32 @@
-{% extends '../templates/base.html' %}
+{% extends '../templates/base2.html' %}
 {% block title %}{{item.name}}{% endblock %}
-{% block super %}
+{% block head %}
+<link href="https://getbootstrap.com/examples/signin/signin.css" rel="stylesheet">
 {% endblock %}
 {% block content %}
-<h1>Name : </u> {{ item.name }}</h1>
-<h2>Description : {{ item.description }}</h2>
-<h2>Price per week : {{ item.price }}</h2>
-<h2>Location : {{ item.location }}</h2>
-<img src="/media/{{ item.image }}" height="300">
+<div class="row">
+  <div class="col-md-5" style="height:300px;padding:25px 25px;">
+  	<img src="/media/{{ item.image }}" height="300">
+  </div>
+  <div class="col-md-7" style="height:300px;padding:25px 25px;">
+  	<h1>Name : </u> {{ item.name }}</h1>
+    <h2>Description : {{ item.description }}</h2>
+    <h2>Price per week : {{ item.price }}</h2>
+    <h2>Location : {{ item.location }}</h2>
+
+    {% if request.user == item.user %}
+		<a href="/item/{{ item.slug }}/edit/">Edit</a><br>
+    {% else %}
+		<form action="/requestitem/" method="POST">
+			{% csrf_token %} 
+			<input type="text" hidden="true" name="item_id" value="{{item.id}}"/>
+			<input type="number" name="duration" value="1" min="1" max="4"/> weeks </br></br>
+			<input type="submit" value="Request" class="btn btn-lg btn-primary"/>
+		</form>
+    {% endif %}
+  </div>
+</div>
 </br>
-{% if request.user == item.user %}
-<a href="/item/{{ item.slug }}/edit/">Edit</a><br>
-{% else %}
-<form action="/requestitem/" method="POST">
-{% csrf_token %} 
-<input type="text" hidden="true" name="item_id" value="{{item.id}}"/>
-<input type="number" name="duration" min="1" max="4"/>
-<input type="submit" value="request"/>
-</form>
-{% endif %}
+</br>
 
-
-
-<a href="/home.html">Home</a><br>
-<a href="/items/">Back</a>
 {% endblock %}

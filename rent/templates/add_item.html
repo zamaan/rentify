@@ -1,12 +1,20 @@
-{% extends '../templates/base.html' %}
-{% block title %} Add{% endblock %}
+{% extends '../templates/base2.html' %}
+{% load i18n %}
+{% load rent_tags %}
+{% block title %} Add Item{% endblock %}
+{% block head %}
+<link href="https://getbootstrap.com/examples/signin/signin.css" rel="stylesheet">
+{% endblock %}
 {% block content %}
-<h1>Add an Item</h1>
-<form method="post" role="form" action="" enctype='multipart/form-data' >
+<form method="post" role="form" action="" enctype='multipart/form-data' class="form-signin">
+    <h2 class="form-signin-heading">Add an Item</h2>
     {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Submit" />
+    {% for field in form %}
+      <div class="form-group">
+        <label for="{{field.id_for_label}}">{{ field.label_tag }}</label>
+        {{field}}
+      </div>
+    {% endfor %}
+    <input type="submit" value="{% trans 'Add' %}" class="btn btn-lg btn-primary btn-block"/>
 </form>
-<a href="/item/add/photo/">Add Image </a><br>
-<a href="/items/">Back </a>
 {% endblock %}
