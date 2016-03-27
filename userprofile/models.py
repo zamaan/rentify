@@ -14,6 +14,8 @@ class Profile(models.Model):
 	address = models.TextField()
 	bio = models.TextField(blank=True,null=True)
 	phone_number = models.CharField(max_length=100)
+	id_proof = models.ImageField(null=True,blank=True)
+	verified = models.BooleanField(default=False)
 
 class ProfileForm(ModelForm):
     class Meta:
