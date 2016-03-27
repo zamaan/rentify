@@ -5,14 +5,13 @@ from userprofile.forms import ContactForm
 from registration.backends.simple.views import RegistrationView
 from django.contrib.auth import authenticate, login as auth_login
 import hashlib
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
 def home(request):
-    if request.user.is_authenticated():
-        return redirect('/items/')
-    else:
-        return render(request, 'home2.html', {
+
+    return render(request, 'home2.html', {
     })
 
 def home2(request):
@@ -50,13 +49,14 @@ def contact(request):
                 return redirect('contact')
     return render(request,'contact.html',{'form':form_class})
 
+@login_required
 def add_profile(request):
     form_class = ProfileForm
 
     # if we're coming from a submitted form, do this
     if request.method == 'POST':
         # grab the data from the submitted form and apply to the form
-        form = form_class(request.POST)
+        form = form_class(request.POST,request.FILES)
 
         if form.is_valid():
             # create an instance but do not save yet
@@ -79,7 +79,7 @@ def add_profile(request):
         'form': form,
     })
 
-
+@login_required
 def show_profile(request,username=False):
     if username:
         user = User.objects.get(username = username)
