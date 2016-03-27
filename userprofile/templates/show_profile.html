@@ -63,7 +63,7 @@
   
   <div class="profile--img">
     <img src="{{gravatar_url}}?s=200" alt="{{profile.full_name}}"/>
-  </div>
+  </div> 
   <div class="profile--text">
     <h1 class="profile--text__alpha">{{profile.full_name}}</h1>
     <span class="glyphicon glyphicon-ok" aria-hidden="true" style="font-size:25px;"></span>
@@ -74,11 +74,10 @@
     <h2 class="profile--text__alpha">{{profile.bio}}</h2>
     <br/>
     {% if request.user == profile.user %}
-    <a href="/profile/edit/"><p style="color:black;">Edit Profile</p></a><br>
+    <a href="/profile/edit/"><p style="color:black;">Edit Profile</p></a>
+     <a href="http://gravatar.com"><p style="color:black;">change/add profile photo</p></a>
+     {% if request.user == profile.user %}<a href="/requests/" class="btn btn-default">View Requests</a>{% endif %}
     {% endif %}
-  </div>
-  <div>
-  {% if request.user == profile.user %}<a href="/requests/" class="btn btn-default">View Requests</a>{% endif %}
   </div>
 </section>
 <div class="container">
