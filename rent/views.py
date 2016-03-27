@@ -4,13 +4,15 @@ from django.template.defaultfilters import slugify
 from rent.models import Item, RequestItem
 from rent.forms import ItemForm
 from django.http import HttpResponseRedirect
-from rent.utils import send_request_email
+from rent.utils import send_request_email, send_approve_email, send_deny_email, requests_for_user
 # Create your views here.
 
 def item_list(request):
     items=Item.objects.all()
+    requests,requests_count = requests_for_user(request.user)
     return render(request, 'item_list.html',{
         'items':items,
+        'requests_count':requests_count,
         })
 
 def item_detail(request, slug):
@@ -20,8 +22,8 @@ def item_detail(request, slug):
         'item':item,
         })
 
-@login_required
 
+@login_required
 def add_item(request):
     form_class = ItemForm
 
@@ -82,6 +84,7 @@ def edit_item(request, slug):
         'form': form,
     })
 
+@login_required
 def requests(request):
     user = request.user
     requests = []
@@ -107,7 +110,7 @@ def requests(request):
         'fulfilled_requests': fulfilled_requests,
     })
 
-
+@login_required
 def requestitem(request):
     if request.method == "POST":
       user = request.user
@@ -121,10 +124,9 @@ def requestitem(request):
                                        item = item, 
                                        duration = duration, 
                                        status = status)
+      if created:   
+        send_request_email(item.user.email.encode(),item_request)
       return redirect('/request/success/%d/'%item_request.id)
-    if created:   
-        send_request_email(item.user.email,item_request)
-    ###send email to item owner that a request has been made by {{user.profile.name}} etc
 
 def request_success(request,r_id):
     r_item = RequestItem.objects.get(id=r_id)
@@ -132,9 +134,13 @@ def request_success(request,r_id):
         'r_item':r_item,
         })
 
+@login_required
 def change_request_status(request,r_id,status):
     request_item = RequestItem.objects.get(id=r_id)
     request_item.status = status
     request_item.save()
-    ## send emaul that request has been approved
+    if status == "approved":
+        send_approve_email(request_item.user.email,request_item)
+    elif status == "deny":
+        send_deny_email(request_item.user.email,request_item)
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
